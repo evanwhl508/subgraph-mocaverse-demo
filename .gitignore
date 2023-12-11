@@ -1,0 +1,4 @@
+mocaversedemo/build/*
+mocaversedemo/node_modules/*
+mocaversedemo/node_modules/.bin/cdl
+mocaversedemo/generated/*

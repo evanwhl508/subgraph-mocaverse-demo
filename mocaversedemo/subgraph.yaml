@@ -1,0 +1,83 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MocaverseDemo
+    network: mainnet
+    source:
+      address: "0x59325733eb952a92e069c87f0a6168b29e80627f"
+      abi: MocaverseDemo
+      startBlock: 16744931
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - ContractURIUpdated
+        - DefaultRoyalty
+        - Initialized
+        - OwnerUpdated
+        - PrimarySaleRecipientUpdated
+        - RequestExecuted
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - RoyaltyForToken
+        - TokenURIRevealed
+        - TokensClaimed
+        - TokensLazyMinted
+        - Transfer
+      abis:
+        - name: MocaverseDemo
+          file: ./abis/MocaverseDemo.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: ContractURIUpdated(string,string)
+          handler: handleContractURIUpdated
+        - event: DefaultRoyalty(indexed address,uint256)
+          handler: handleDefaultRoyalty
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handleOwnerUpdated
+        - event: PrimarySaleRecipientUpdated(indexed address)
+          handler: handlePrimarySaleRecipientUpdated
+        - event: RequestExecuted(indexed address,indexed address,(uint128,uint128,bytes32,bytes))
+          handler: handleRequestExecuted
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: RoyaltyForToken(indexed uint256,indexed address,uint256)
+          handler: handleRoyaltyForToken
+        - event: TokenURIRevealed(indexed uint256,string)
+          handler: handleTokenURIRevealed
+        - event: TokensClaimed(indexed address,indexed address,uint256,uint256,string[])
+          handler: handleTokensClaimed
+        - event: TokensLazyMinted(indexed string,indexed uint256,uint256,string,bytes)
+          handler: handleTokensLazyMinted
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mocaverse-demo.ts
+
+templates:
+  - name: TokenMetadata
+    kind: file/ipfs
+    mapping:
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/metadata.ts
+      handler: handleMetadata
+      entities:
+        - TokenMetadata
+      abis:
+        - name: MocaverseDemo
+          file: ./abis/MocaverseDemo.json
